@@ -12,11 +12,17 @@ const ChannelDetail = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    fetchFromAPI(`channels?part=snippet&id=${id}`)
-      .then((data) => setChannelDetail(data?.items[0]));
+    const fetchResults = async () => {
+      const data = await fetchFromAPI(`channels?part=snippet&id=${id}`)
 
-    fetchFromAPI(`search?channelId=${id}&part=snippet&order=date}`)
-      .then((data) => setVideos(data?.items));
+      setChannelDetail(data?.items[0]);
+
+      const videosData = await fetchFromAPI(`search?channelId=${id}&part=snippet%2Cid&order=date`);
+
+      setVideos(videosData?.items);
+    };
+
+    fetchResults();
   }, [id])
 
   return (
@@ -24,7 +30,7 @@ const ChannelDetail = () => {
       <Box>
         <div
           style={{
-            background: 'linear - gradient(90deg, rgba(2, 0, 36, 1) 0 %, rgba(9, 9, 121, 1) 35 %, rgba(1, 200, 247, 1) 96 %, rgba(0, 212, 255, 1) 100 %)',
+            background: 'linear-gradient(90deg, rgba(0,238,247,1) 0%, rgba(206,3,184,1) 100%, rgba(0,212,255,1) 100%)',
             zIndex: 10,
             height: '300px'
 
