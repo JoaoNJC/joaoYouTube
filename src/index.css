@@ -50,7 +50,8 @@ a {
   text-transform: capitalize;
   display: flex;
   align-items: center;
-  justify-content: start;
+  /* eslint-disable-next-line */
+  justify-content: flex-start;
   cursor: pointer;
   background: transparent;
   outline: none;
